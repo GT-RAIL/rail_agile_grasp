@@ -1,0 +1,11 @@
+# Define the goal
+float64 x
+float64 y
+int16 imageWidth
+int16 imageHeight
+---
+# Define the result
+bool success
+---
+# Define a feedback message
+string message

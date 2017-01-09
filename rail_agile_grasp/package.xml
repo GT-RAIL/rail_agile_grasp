@@ -1,0 +1,24 @@
+<package>
+  <name>rail_agile_grasp</name>
+  <version>0.0.0</version>
+  <description>Metapackage for the heuristic-based AGILE grasp detector and classifier. Includes the original
+  AGILE package, the heuristic classifier package, and other supporting functionality.</description>
+
+  <author email="dekent@gatech.edu">David Kent</author>
+  <maintainer email="dekent@gatech.edu">David Kent</maintainer>
+
+  <url type="website">http://ros.org/wiki/rail_agile_grasp</url>
+  <url type="bugtracker">https://github.com/GT-RAIL/rail_agile_grasp/issues</url>
+  <url type="repository">https://github.com/GT-RAIL/rail_agile_grasp</url>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  
+  <run_depend>agile_grasp_base</run_depend>
+  <run_depend>rail_agile_grasp_msgs</run_depend>
+  <run_depend>rail_agile_nodes</run_depend>
+  <export>
+    <metapackage />
+  </export>
+</package>

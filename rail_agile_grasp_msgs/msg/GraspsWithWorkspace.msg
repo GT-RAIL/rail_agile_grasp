@@ -1,0 +1,2 @@
+rail_agile_grasp_msgs/Workspace workspace
+rail_agile_grasp_msgs/Grasps grasps

@@ -1,0 +1,46 @@
+<launch>
+  <!-- Agile grasp -->
+  <node name="find_grasps" pkg="agile_grasp_base" type="find_grasps" output="screen">
+    <param name="cloud_topic" value="/agile_test_cloud_interleaver/interleaved_clouds" />
+    <param name="cloud_frame" value="camera1_rgb_optical_frame" />
+    <param name="cloud_type" value="0" />
+    <param name="svm_file_name" value="$(find agile_grasp_base)/svm_032015_20_20_same" />
+    <param name="num_samples" value="1000" />
+    <param name="num_threads" value="4" />
+    <param name="num_clouds" value="2" />
+    <param name="finger_width" value="0.014" />
+    <param name="hand_outer_diameter" value="0.112" />
+    <param name="hand_depth" value="0.021" />
+    <param name="init_bite" value="0.005" />
+    <param name="hand_height" value="0.037" />
+    <rosparam param="workspace"> [-0.4, 0.4, -0.3, 0.3, 0.45, 1.05] </rosparam>
+    <!--<rosparam param="camera_pose"> [0, 0.445417, 0.895323, 0.215,
+              1, 0, 0, -0.015,
+              0, 0.895323, -0.445417, 0.23,
+              0, 0, 0, 1] </rosparam>-->
+    <rosparam param="camera_pose"> [1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1] </rosparam>
+    <param name="min_inliers" value="1" />
+    <param name="plotting" value="2" />
+    <param name="marker_lifetime" value="0.0" />
+  </node>
+
+  <node name="agile_test_grasp_sampler" pkg="rail_agile_nodes" type="grasp_sampler" output="screen" />
+
+  <node name="agile_test_cloud_interleaver" pkg="rail_agile_nodes" type="point_cloud_interleaver" output="screen" />
+
+  <!-- Cameras -->
+  <include file="$(find openni_launch)/launch/openni.launch">
+    <arg name="camera" value="camera1" />
+    <arg name="device_id" value="1112170123" />
+  </include>
+  <include file="$(find openni_launch)/launch/openni.launch">
+    <arg name="camera" value="camera2" />
+    <arg name="device_id" value="1411060937" />
+  </include>
+
+  <!-- Camera transforms -->
+  <node pkg="tf" type="static_transform_publisher" name="camera_transform_broadcaster" args="0.525 0.755 0 -1.570796 0 3.141593 camera1_link camera2_link 30" />
+</launch>
