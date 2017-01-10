@@ -42,6 +42,8 @@ This node performs grasp candidate evaluation by evaluating a set of heuristics 
   * `change_point_cloud_topic`([rail_agile_grasp_msgs/ChangePointCloud](https://github.com/GT-RAIL/rail_agile_grasp/blob/master/rail_agile_grasp_msgs/srv/ChangePointCloud.srv))  
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; service for switching the input point cloud
  * **Parameters**
+  * `cloud_topic`(string, "/camera/depth_registered/points")  
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; initial point cloud topic to subscribe to
   * `neighborhood_radius`(double, 0.02)  
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; radius defining the sphere of a grasp's neighborhood, in meters, used for clustering grasp hypotheses
   * `orientation_threshold`(double, 0.1)  
@@ -52,7 +54,23 @@ This node performs grasp candidate evaluation by evaluating a set of heuristics 
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; option to remove the dominant plane from the point cloud within the given workspace before calculating the object orientaion heuristic; it's recommended to set this to true if the grasps are being used for tabletop pick-and-place applications.
 
 ### point_cloud_clicker
-in progress...
+This node facilitates clicking on point clouds by either creating an interactive marker server with a clickable point cloud, or by running action servers that take clicked point information and return points in 3D space.
+ * **Action Servers**
+  * `click_image_point`([rail_agile_grasp_msgs/ClickImagePointAction](https://github.com/GT-RAIL/rail_agile_grasp/blob/master/rail_agile_grasp_msgs/action/ClickImagePoint.action))
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; click event from clicking on an image; calculates gasps using AGILE and the `grasp_sampler` node on a workspace centered on the clicked point
+ * `click_image_point_navidget`([rail_agile_grasp_msgs/ClickImagePointAction](https://github.com/GT-RAIL/rail_agile_grasp/blob/master/rail_agile_grasp_msgs/action/ClickImagePoint.action))
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; click event from clicking on an image; initializes a constrained positioning marker at the clicked point, see the [remote_manipulation_markers](http://wiki.ros.org/remote_manipulation_markers) package for details
+ * **Subscribed Topics**
+  * `/camera/depth_registered/points`([sensor_msgs/PointCloud2](http://docs.ros.org/indigo/api/sensor_msgs/html/msg/PointCloud2.html))  
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; point cloud subscriber; the topic can be set by changing the parameter `cloud_topic` or by calling the `change_point_cloud_topic` service.
+ * **Services**
+  * `change_point_cloud_topic`([rail_agile_grasp_msgs/ChangePointCloud](https://github.com/GT-RAIL/rail_agile_grasp/blob/master/rail_agile_grasp_msgs/srv/ChangePointCloud.srv))  
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; service for switching the input point cloud
+  * `request_marker_update'([std_srvs/Empty](http://docs.ros.org/indigo/api/std_srvs/html/srv/Empty.html))
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; update the clickable point cloud marker on request
+ * **Parameters**
+  * `cloud_topic`(string, "/camera/depth_registered/points")  
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; initial point cloud topic to subscribe to
 
 ### point_cloud_filter
 in progress...
