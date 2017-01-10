@@ -101,7 +101,23 @@ This node subscribes to two point cloud sources and combines them into a single 
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; initial point cloud topic to subscribe to
 
 ## Installation
-in progress...
+Clone the package into your catkin workspace and build it as follows:
+```bash
+cd (your catkin workspace)/src
+git clone https://github.com/GT-RAIL/rail_agile_grasp.git
+cd ..
+catkin_make
+```
 
 ## Startup
-in progress...
+The `rail_agile_nodes` package contains two launch files that will bring up the main functionality of the package.  `find_grasps.launch` will run the base AGILE code and the `grasp_sampler` node for sampling and ranking the AGILE hypotheses by heuristics.  It is run as follows:
+```bash
+roslaunch rail_agile_nodes find_grasps.launch
+```
+
+`two_cameras.launch` will run the same thing, but will launch two depth cameras and add the intermediate step of point cloud interleaving.
+```bash
+roslaunch rail_agile_nodes two_cameras.launch
+```
+
+Supporting nodes can be run individually using `rosrun`.
