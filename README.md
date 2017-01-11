@@ -58,7 +58,7 @@ This node facilitates clicking on point clouds by either creating an interactive
  * **Action Servers**
   * `click_image_point`([rail_agile_grasp_msgs/ClickImagePointAction](https://github.com/GT-RAIL/rail_agile_grasp/blob/master/rail_agile_grasp_msgs/action/ClickImagePoint.action))  
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; click event from clicking on an image; calculates gasps using AGILE and the `grasp_sampler` node on a workspace centered on the clicked point
- * `click_image_point_navidget`([rail_agile_grasp_msgs/ClickImagePointAction](https://github.com/GT-RAIL/rail_agile_grasp/blob/master/rail_agile_grasp_msgs/action/ClickImagePoint.action))  
+ * `click_image_point_cp`([rail_agile_grasp_msgs/ClickImagePointAction](https://github.com/GT-RAIL/rail_agile_grasp/blob/master/rail_agile_grasp_msgs/action/ClickImagePoint.action))  
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; click event from clicking on an image; initializes a constrained positioning marker at the clicked point, see the [remote_manipulation_markers](http://wiki.ros.org/remote_manipulation_markers) package for details
  * **Subscribed Topics**
   * `/camera/depth_registered/points`([sensor_msgs/PointCloud2](http://docs.ros.org/indigo/api/sensor_msgs/html/msg/PointCloud2.html))  

@@ -47,7 +47,7 @@ private:
 
   void executeClickedPointCallback(const rail_agile_grasp_msgs::ClickImagePointGoalConstPtr &goal);
 
-  void executeClickedPointNavidgetCallback(const rail_agile_grasp_msgs::ClickImagePointGoalConstPtr &goal);
+  void executeClickedPointCPCallback(const rail_agile_grasp_msgs::ClickImagePointGoalConstPtr &goal);
 
   ros::NodeHandle n;
   ros::NodeHandle pnh;
@@ -58,12 +58,12 @@ private:
   //services
   ros::ServiceServer changePointCloudTopicServer;
   ros::ServiceServer updateMarkerServer;
-  ros::ServiceClient navidgetClient;
+  ros::ServiceClient cpClient;
 
   //actionlib
   actionlib::SimpleActionClient<rail_agile_grasp_msgs::FindGraspsAction> acFindGrasps;
   actionlib::SimpleActionServer<rail_agile_grasp_msgs::ClickImagePointAction> clickedPointServer;
-  actionlib::SimpleActionServer<rail_agile_grasp_msgs::ClickImagePointAction> clickedPointNavidgetServer;
+  actionlib::SimpleActionServer<rail_agile_grasp_msgs::ClickImagePointAction> clickedPointCPServer;
 
   boost::recursive_mutex cloudMutex;
   boost::shared_ptr<interactive_markers::InteractiveMarkerServer> imServer;

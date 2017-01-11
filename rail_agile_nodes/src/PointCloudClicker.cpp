@@ -5,7 +5,7 @@ using namespace std;
 PointCloudClicker::PointCloudClicker() :
     acFindGrasps("/rail_agile_grasp/find_grasps"), pnh("~"),
     clickedPointServer(pnh, "click_image_point", boost::bind(&PointCloudClicker::executeClickedPointCallback, this, _1), false),
-    clickedPointNavidgetServer(pnh, "click_image_point_navidget", boost::bind(&PointCloudClicker::executeClickedPointNavidgetCallback, this, _1), false)
+    clickedPointCPServer(pnh, "click_image_point_cp", boost::bind(&PointCloudClicker::executeClickedPointCPCallback, this, _1), false)
 {
   ROS_INFO("Point cloud clicker is starting...");
   //read parameters
@@ -44,11 +44,11 @@ PointCloudClicker::PointCloudClicker() :
   changePointCloudTopicServer = pnh.advertiseService("change_point_cloud_topic", &PointCloudClicker::changePointCloudTopicCallback, this);
   updateMarkerServer = pnh.advertiseService("request_marker_update", &PointCloudClicker::requestMarkerUpdate, this);
 
-  navidgetClient = n.serviceClient<remote_manipulation_markers::CreateSphere>("constrained_positioning/create_sphere");
+  cpClient = n.serviceClient<remote_manipulation_markers::CreateSphere>("constrained_positioning/create_sphere");
 
   ROS_INFO("Starting action servers...");
   clickedPointServer.start();
-  clickedPointNavidgetServer.start();
+  clickedPointCPServer.start();
   ROS_INFO("Action servers started.");
 }
 
@@ -130,13 +130,13 @@ void PointCloudClicker::executeClickedPointCallback(const rail_agile_grasp_msgs:
   clickedPointServer.setSucceeded(result);
 }
 
-void PointCloudClicker::executeClickedPointNavidgetCallback(const rail_agile_grasp_msgs::ClickImagePointGoalConstPtr &goal)
+void PointCloudClicker::executeClickedPointCPCallback(const rail_agile_grasp_msgs::ClickImagePointGoalConstPtr &goal)
 {
   rail_agile_grasp_msgs::ClickImagePointResult result;
   rail_agile_grasp_msgs::ClickImagePointFeedback feedback;
 
   feedback.message = "Waiting for camera data...";
-  clickedPointNavidgetServer.publishFeedback(feedback);
+  clickedPointCPServer.publishFeedback(feedback);
 
   ros::Rate loopRate(30);
   ros::Time startTime = ros::Time::now();
@@ -148,17 +148,17 @@ void PointCloudClicker::executeClickedPointNavidgetCallback(const rail_agile_gra
     if (ros::Time::now() - startTime >= ros::Duration(10.0))
     {
       feedback.message = "Could not receive camera data, an error has occurred.";
-      clickedPointNavidgetServer.publishFeedback(feedback);
+      clickedPointCPServer.publishFeedback(feedback);
 
       ROS_INFO("No point cloud received, could not create grasp area.");
       result.success = false;
-      clickedPointNavidgetServer.setSucceeded(result);
+      clickedPointCPServer.setSucceeded(result);
       return;
     }
   }
 
   feedback.message = "Setting a grasp area at the clicked point...";
-  clickedPointNavidgetServer.publishFeedback(feedback);
+  clickedPointCPServer.publishFeedback(feedback);
 
   //convert clicked point to camera image point
   double px = ((double)(fullPointCloudPtr->width))/((double)goal->imageWidth) * goal->x;
@@ -169,7 +169,7 @@ void PointCloudClicker::executeClickedPointNavidgetCallback(const rail_agile_gra
 
   if (pcl::isFinite(point))
   {
-    ROS_INFO("Initializing navidget at point %f, %f, %f, in frame %s...", point.x, point.y, point.z, fullPointCloudPtr->header.frame_id.c_str());
+    ROS_INFO("Initializing constrained positioning marker at point %f, %f, %f, in frame %s...", point.x, point.y, point.z, fullPointCloudPtr->header.frame_id.c_str());
 
     geometry_msgs::PointStamped inputPoint;
     inputPoint.point.x = point.x;
@@ -183,27 +183,27 @@ void PointCloudClicker::executeClickedPointNavidgetCallback(const rail_agile_gra
 
     remote_manipulation_markers::CreateSphere srv;
     srv.request.point = transformedPoint;
-    if (!navidgetClient.call(srv))
+    if (!cpClient.call(srv))
     {
       feedback.message = "There was an error setting a new grasp area.";
-      clickedPointNavidgetServer.publishFeedback(feedback);
+      clickedPointCPServer.publishFeedback(feedback);
       result.success = false;
     }
     else
     {
       feedback.message = "New grasp area set.";
-      clickedPointNavidgetServer.publishFeedback(feedback);
+      clickedPointCPServer.publishFeedback(feedback);
       result.success = true;
     }
   }
   else
   {
     feedback.message = "There was an error reading the clicked point. Please try again.";
-    clickedPointNavidgetServer.publishFeedback(feedback);
+    clickedPointCPServer.publishFeedback(feedback);
     result.success = false;
   }
 
-  clickedPointNavidgetServer.setSucceeded(result);
+  clickedPointCPServer.setSucceeded(result);
 }
 
 void PointCloudClicker::cloudCallback(const pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr &pc)
