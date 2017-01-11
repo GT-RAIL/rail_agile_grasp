@@ -1,9 +1,9 @@
 # Define the goal
-rail_agile_grasp_msgs/Workspace workspace
-bool useClassifier
+rail_agile_grasp_msgs/Workspace workspace   # workspace in which to search for grasps
+bool useClassifier                          # flag for using the AGILE classifier
 ---
 # Define the result
-bool success
+bool success                                # true if AGILE is able to fully execute the find grasps routine
 ---
 # Define a feedback message
-string current_action
+string current_action                       # text feedback indicating what's currently being executed

@@ -1,2 +1,2 @@
-string cloudTopic
+string cloudTopic   # new point cloud topic
 ---

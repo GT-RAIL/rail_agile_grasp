@@ -58,7 +58,6 @@ add_message_files(
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
-  CycleGrasps.srv
   ChangePointCloud.srv
 )
 
@@ -68,8 +67,6 @@ add_action_files(
    ClickImagePoint.action
    FindGrasps.action
    RailAgileGrasp.action
-   SelectedGrasp.action
-#   Action2.action
  )
 
 ## Generate added messages and services with any dependencies listed here

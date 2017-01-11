@@ -1,11 +1,11 @@
 # Define the goal
-float64 x
-float64 y
-int16 imageWidth
-int16 imageHeight
+float64 x                       # x coordinate of clicked point in image coords
+float64 y                       # y coordinate of clicked point in image coords
+int16 imageWidth                # width of image in pixels
+int16 imageHeight               # height of image in pixels
 ---
 # Define the result
-bool success
+bool success                    # true if 3D point could be found from image click point
 ---
 # Define a feedback message
-string message
+string message                  # text feedback
