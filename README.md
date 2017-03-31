@@ -1,7 +1,5 @@
 # rail_agile_grasp
-Metapackage for the heuristic-based AGILE grasp detector and classifier. Includes the original AGILE package, the heuristic classifier package, and other supporting functionality.
-
-Additional documentation and details to come...
+Metapackage for the heuristic-based AGILE grasp detector and classifier. Includes the original AGILE package, the heuristic classifier package, and other supporting functionality.  This metapackage includes the grasp calculator for the Point-and-Click method for 6-DoF end-effector positioning described in [A Comparison of Remote Robot Teleoperation Interfaces for General Object Manipulation](http://dl.acm.org/citation.cfm?id=3020249), published in HRI 2017.
 
 ## Description
 This metapackage extends AGILE grasp to use heuristic-based grasp evaluation in place of AGILE's grasp classifier.  Development of this package included adding extra ROS messages, services, and actionlib to the original AGILE code to facilitate communication with the heurist-based evaluator.  Also included are additional packages potentially useful for testing and deployment.
