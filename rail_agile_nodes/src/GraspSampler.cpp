@@ -208,6 +208,7 @@ void GraspSampler::graspsCallback(const rail_agile_grasp_msgs::GraspsWithWorkspa
     ROS_INFO("Found %lu poses!", finalPoses.poses.size());
     if (finalPoses.poses.empty())
     {
+      graspsPublisher.publish(finalPoses);
       return;
     }
 

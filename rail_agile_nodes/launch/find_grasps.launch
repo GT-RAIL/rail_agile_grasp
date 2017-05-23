@@ -1,10 +1,12 @@
 <launch>
   <arg name="remove_table" default="false" />
+  <arg name="point_cloud_topic" default="/camera/depth_registered/points" />
+  <arg name="point_cloud_frame" default="camera_rgb_optical_frame" />
 
   <!-- Agile grasp -->
   <node name="find_grasps" pkg="agile_grasp_base" type="find_grasps" output="screen">
-    <param name="cloud_topic" value="/camera_side/depth_registered/points" />
-    <param name="cloud_frame" value="camera_side_rgb_optical_frame" />
+    <param name="cloud_topic" value="$(arg point_cloud_topic)" />
+    <param name="cloud_frame" value="$(arg point_cloud_frame)" />
     <param name="cloud_type" value="0" />
     <param name="svm_file_name" value="$(find agile_grasp_base)/svm_032015_20_20_same" />
     <param name="num_samples" value="1000" />
@@ -31,7 +33,7 @@
 
   <node name="grasp_sampler" pkg="rail_agile_nodes" type="grasp_sampler" output="screen">
     <param name="remove_table" value="$(arg remove_table)" />
-    <param name="cloud_topic" value="/camera/depth_registered/points" />
+    <param name="cloud_topic" value="$(arg point_cloud_topic)" />
   </node>
 
   <!-- Cameras -->
