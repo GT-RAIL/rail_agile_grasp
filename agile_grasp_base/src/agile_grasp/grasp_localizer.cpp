@@ -144,7 +144,10 @@ void GraspLocalizer::executeFind(const rail_agile_grasp_msgs::FindGraspsGoalCons
         finalGrasps.grasps = createRailGraspsMsg(hands_);
         finalGrasps.workspace = goal->workspace;
         grasps_with_workspace_pub_.publish(finalGrasps);
-        result.success = true;
+        if (finalGrasps.grasps.grasps.empty())
+          result.success = false;
+        else
+          result.success = true;
         server.setSucceeded(result);
         return;
       }

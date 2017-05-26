@@ -254,6 +254,8 @@ void GraspSampler::graspsCallback(const rail_agile_grasp_msgs::GraspsWithWorkspa
     if (croppedCloud->size() == 0)
     {
       ROS_INFO("No points in plane-removed point cloud, cannot calculate grasps...");
+      finalPoses.poses.clear();
+      graspsPublisher.publish(finalPoses);
       return;
     }
     kdTree->setInputCloud(croppedCloud);
@@ -284,6 +286,8 @@ void GraspSampler::graspsCallback(const rail_agile_grasp_msgs::GraspsWithWorkspa
     if (clusters.empty())
     {
       ROS_INFO("No clusters could be extracted after plane removal, cannot calculate grasps...");
+      finalPoses.poses.clear();
+      graspsPublisher.publish(finalPoses);
       return;
     }
 
