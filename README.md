@@ -8,9 +8,10 @@ This metapackage extends AGILE grasp to use heuristic-based grasp evaluation in 
  * [agile_grasp_base](#agile_grasp_base)
  * [rail_agile_grasp_msgs](#rail_agile_grasp_msgs)
  * [rail_agile_nodes](#rail_agile_nodes)
-  * [hlpr_moveit_wrapper](#hlpr_moveit_wrapper)
-  * [common_actions](#common_actions)
-  * [primitive_actions](#primitive_actions)
+  * [grasp_sampler](#grasp_sampler)
+  * [point_cloud_clicker](#point_cloud_clicker)
+  * [point_cloud_filter](#point_cloud_filter)
+  * [point_cloud_interleaver](#point_cloud_interleaver)
  * [Installation](#installation)
  * [Startup](#startup)
  
