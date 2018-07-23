@@ -1,3 +1,8 @@
+# Deprecation Warning
+This package is no longer under active development.  For updated and supported versions of this package, please see:
+ * [rail_grasp_calculation](https://github.com/gt-rail/rail_grasp_calculation): Standalone meta-package for grasp pose clustering and heuristic calculation, as well as messages for connecting to grasp samplers and other grasp ranking methods (the package itself is agnostic to where the source of the grasp poses)
+ * [rail_agile](https://github.com/gt-rail/rail_agile): adapted [AGILE_grasp](https://github.com/atenpas/agile_grasp) package exposing some functionality as ROS action servers, for use with [rail_grasp_calculation](https://github.com/gt-rail/rail_grasp_calculation)
+
 # rail_agile_grasp
 Metapackage for the heuristic-based AGILE grasp detector and classifier. Includes the original AGILE package, the heuristic classifier package, and other supporting functionality.  This metapackage includes the grasp calculator for the Point-and-Click method for 6-DoF end-effector positioning described in [A Comparison of Remote Robot Teleoperation Interfaces for General Object Manipulation](http://dl.acm.org/citation.cfm?id=3020249), published in HRI 2017.
 
